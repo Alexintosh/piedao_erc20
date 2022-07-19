@@ -1,0 +1,26 @@
+specVersion: 0.0.4
+schema:
+  file: sample.schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: erc20
+    network: mainnet
+    source:
+      address: "0x33e18a092a93ff21ad04746c7da12e35d34dc7c4"
+      abi: IERC20
+      startBlock: 12091615
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ERC20Contract
+      abis:
+        - name: IERC20
+          file: node_modules/@openzeppelin/contracts/build/contracts/IERC20Metadata.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: erc20/erc20.wasm
